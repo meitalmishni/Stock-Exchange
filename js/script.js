@@ -12,10 +12,12 @@ class StockExchange {
     createStockExchangeCard() {
         const cardDiv = document.createElement("div");
         const cardA = document.createElement("a");
+
         cardA.setAttribute("href", "./company.html?symbol=" + this.symbol);
         cardA.setAttribute("target", "_blank");
         cardA.innerHTML = this.name + "(" + this.symbol + ")";
 
+        cardDiv.classList.add("search-div");
         cardDiv.appendChild(cardA);
 
         cardDiv.addEventListener("click", () => {
@@ -95,13 +97,14 @@ class StockExchangeSearcher {
     async runSearch(e) {
         this.searchQuery = document.getElementById("search-input").value;
 
+        const container = document.getElementById("stock-exchange-container");
+        container.innerHTML = "";
+
         loader.classList.add("spinner-border");
         const results = await this.getStockExchange();
         loader.classList.remove("spinner-border");
 
         if (!results) return;
-
-        const container = document.getElementById("stock-exchange-container");
 
         const stockExchangeObjects = [];
         results.forEach((item) => {

@@ -1,0 +1,12 @@
+.search-div {
+    padding: 10px;
+    border-top: 1px #ced4da solid;
+}
+
+.search-div a {
+    text-decoration: none;
+}
+
+.search-div:first-child {
+    border-top: none;
+}
