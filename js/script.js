@@ -1,6 +1,11 @@
 const loader = document.getElementById('loader');
 
-class StockExchange {
+const searchForm = document.getElementById("search-form");
+const container = document.getElementById("stock-exchange-container");
+
+
+
+/*export class StockExchange {
     constructor(stockExchangeObject) {
         this.symbol = stockExchangeObject.symbol;
         this.name = stockExchangeObject.name;
@@ -32,15 +37,16 @@ class StockExchange {
 
         if (!this.data) {
             console.log("Send request");
-            this.data = await this.getStockExchangeData();
+            this.data = await this.getStockExchangeData(this.symbol);
         }
+
     }
 
-    async getStockExchangeData() {
+    async getStockExchangeData(symbol) {
         try {
             const url =
                 "https://stock-exchange-dot-full-stack-course-services.ew.r.appspot.com/api/v3/company/profile/" +
-                this.symbol;
+                symbol;
 
             const response = await fetch(url);
             const result = await response.json();
@@ -81,7 +87,7 @@ class StockExchangeSearcher {
                 "&exchange=" +
                 this.searchExchange;
 
-            //console.log("URL:", url);
+            console.log("URL:", url);
 
             const response = await fetch(url);
             const results = await response.json();
@@ -115,10 +121,70 @@ class StockExchangeSearcher {
             container.appendChild(card);
         });
     }
-}
+}*/
 
-let movieSearcherInstance = null;
+/*let movieSearcherInstance = null;
 window.onload = () => {
     movieSearcherInstance = new StockExchangeSearcher();
+};*/
 
-};
+
+function createStockExchangeCard(name, symbol) {
+    const cardDiv = document.createElement("div");
+    const cardA = document.createElement("a");
+
+    cardA.setAttribute("href", "./company.html?symbol=" + symbol);
+    cardA.setAttribute("target", "_blank");
+    cardA.innerHTML = name + "(" + symbol + ")";
+
+    cardDiv.classList.add("search-div");
+    cardDiv.appendChild(cardA);
+
+    return cardDiv;
+}
+
+async function getStockExchange(searchType, searchQuery, searchLimit, searchExchange) {
+    try {
+        const url =
+            "https://stock-exchange-dot-full-stack-course-services.ew.r.appspot.com/api/v3/" +
+            searchType +
+            "?query=" +
+            encodeURIComponent(searchQuery) +
+            "&limit=" +
+            searchLimit +
+            "&exchange=" +
+            searchExchange;
+
+        const response = await fetch(url);
+        const results = await response.json();
+
+        console.log("Results:", results);
+
+        return results;
+    } catch (error) {
+        return [];
+    }
+}
+
+
+async function runSearch(e) {
+    const searchQuery = document.getElementById("search-input").value;
+
+    container.innerHTML = "";
+
+    loader.classList.add("spinner-border");
+    const results = await getStockExchange("search", searchQuery, 10, "NASDAQ");
+    loader.classList.remove("spinner-border");
+
+    if (!results) return;
+
+    results.forEach((item) => {
+        const card = createStockExchangeCard(item.name, item.symbol);
+        container.appendChild(card);
+    });
+}
+
+searchForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    runSearch();
+});
