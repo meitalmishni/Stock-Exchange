@@ -1,4 +1,5 @@
 import { getStockExchangeData } from './company.js';
+//import { Marquee } from './marquee.js';
 
 const loader = document.getElementById('loader');
 const searchForm = document.getElementById("search-form");
@@ -222,18 +223,21 @@ window.onload = async () => {
 
     const marquee = document.getElementById("marquee");
 
-    marquee.style.visibility = "hidden";
-    const companyList = await getCompanyList();
-    marquee.style.visibility = "visible";
-    console.log("Company list: ", companyList);
+    const marqueeElement = new Marquee(marquee);
 
-    const marqueeUi = document.getElementById("marquee-content");
+    // marquee.style.visibility = "hidden";
+    // const companyList = await getCompanyList();
+    // const companyListSlice = companyList.slice(0, 100);
+    // marquee.style.visibility = "visible";
+    // console.log("Company list: ", companyList);
 
-    for (let i = 0; i < 100; i++) {
-        const div = document.createElement("div");
-        div.classList.add("marquee-tag");
-        div.innerHTML = companyList[i].symbol + " $" + companyList[i].price;
-        marqueeUi.append(div);
-    }
+    // const marqueeUi = document.getElementById("marquee-content");
+
+    // companyListSlice.forEach(item => {
+    //     const div = document.createElement("div");
+    //     div.classList.add("marquee-tag");
+    //     div.innerHTML = item.symbol + " $" + item.price;
+    //     marqueeUi.append(div);
+    // });
 
 }
