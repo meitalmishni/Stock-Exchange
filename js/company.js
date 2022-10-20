@@ -54,7 +54,7 @@ window.onload = async () => {
     companyPercentages.innerHTML = "(" + parseFloat(companyProfile.changesPercentage).toFixed(2) + "%)";
 
     if (companyProfile.changesPercentage > 0) {
-        companyPercentages.style.color = "lightgreen";
+        companyPercentages.style.color = "#74AB8D";
     } else {
         companyPercentages.style.color = "red";
     }

@@ -129,6 +129,18 @@ window.onload = () => {
 };*/
 
 
+async function getCompanyList() {
+    try {
+        const url = "https://stock-exchange-dot-full-stack-course-services.ew.r.appspot.com/api/v3/stock/list";
+        const response = await fetch(url);
+        const result = response.json();
+
+        return result;
+    } catch (error) {
+        return false;
+    }
+}
+
 function createStockExchangeCard(name, symbol, image, percentage) {
     const cardDiv = document.createElement("div");
     const cardA = document.createElement("a");
@@ -144,7 +156,7 @@ function createStockExchangeCard(name, symbol, image, percentage) {
 
     cardSpan.innerHTML = "(" + percentage + ")";
     if (percentage > 0) {
-        cardSpan.style.color = "lightgreen";
+        cardSpan.style.color = "#74AB8D";
     } else {
         cardSpan.style.color = "red";
     }
@@ -202,9 +214,26 @@ async function runSearch(e) {
     });
 }
 
-window.onload = () => {
+window.onload = async () => {
     searchForm.addEventListener("submit", (e) => {
         e.preventDefault();
         runSearch();
     });
+
+    const marquee = document.getElementById("marquee");
+
+    marquee.style.visibility = "hidden";
+    const companyList = await getCompanyList();
+    marquee.style.visibility = "visible";
+    console.log("Company list: ", companyList);
+
+    const marqueeUi = document.getElementById("marquee-content");
+
+    for (let i = 0; i < 100; i++) {
+        const div = document.createElement("div");
+        div.classList.add("marquee-tag");
+        div.innerHTML = companyList[i].symbol + " $" + companyList[i].price;
+        marqueeUi.append(div);
+    }
+
 }
