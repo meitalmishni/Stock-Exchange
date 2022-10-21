@@ -11,28 +11,45 @@
         integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <link rel="stylesheet" href="./css/style.css">
     <script src="./js/marquee.js"></script>
+    <script src="./js/searchForm.js"></script>
+    <script src="./js/searchResult.js"></script>
     <script type="module" src="./js/script.js"></script>
 </head>
 
 <body>
-    <div id="marquee" class="marquee">
-        <div id="marquee-content" class="marquee-content">
-        </div>
-    </div>
+    <div id="marquee" class="marquee"></div>
 
     <div class="container w-50 mt-4">
         <form class="d-flex" id="search-form" role="search">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="search-input">
-            <button class="btn btn-outline-success" type="submit">Search</button>
+            <!-- <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="search-input">
+            <button class="btn btn-outline-success" type="submit">Search</button> -->
         </form>
 
         <div class="d-flex justify-content-center mt-3">
             <div id="loader"></div>
         </div>
 
-        <div id="stock-exchange-container">
-        </div>
+        <div id="search-result"></div>
     </div>
+
+    <script>
+        (async function () {
+            const marqueeElement = document.getElementById("marquee");
+            const searchFormElement = document.getElementById("search-form");
+            const searchFormResultElement = document.getElementById("search-result");
+
+            const marquee = new Marquee(marqueeElement);
+            marquee.load();
+
+            const form = new SearchForm(searchFormElement);
+            const results = new SearchResult(searchFormResultElement);
+
+            form.onSearch((companies) => {
+                console.log("companies", companies);
+                results.renderResults(companies);
+            });
+        })();
+    </script>
 </body>
 
 </html>

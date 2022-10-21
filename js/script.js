@@ -1,9 +1,11 @@
 import { getStockExchangeData } from './company.js';
 //import { Marquee } from './marquee.js';
 
-const loader = document.getElementById('loader');
-const searchForm = document.getElementById("search-form");
-const container = document.getElementById("stock-exchange-container");
+// const loader = document.getElementById('loader');
+const marqueeElement = document.getElementById("marquee");
+const searchFormElement = document.getElementById("search-form");
+const searchFormResultElement = document.getElementById("search-result");
+// const container = document.getElementById("stock-exchange-container");
 
 
 /*export class StockExchange {
@@ -130,17 +132,17 @@ window.onload = () => {
 };*/
 
 
-async function getCompanyList() {
-    try {
-        const url = "https://stock-exchange-dot-full-stack-course-services.ew.r.appspot.com/api/v3/stock/list";
-        const response = await fetch(url);
-        const result = response.json();
+// async function getCompanyList() {
+//     try {
+//         const url = "https://stock-exchange-dot-full-stack-course-services.ew.r.appspot.com/api/v3/stock/list";
+//         const response = await fetch(url);
+//         const result = response.json();
 
-        return result;
-    } catch (error) {
-        return false;
-    }
-}
+//         return result;
+//     } catch (error) {
+//         return false;
+//     }
+// }
 
 function createStockExchangeCard(name, symbol, image, percentage) {
     const cardDiv = document.createElement("div");
@@ -215,29 +217,15 @@ async function runSearch(e) {
     });
 }
 
-window.onload = async () => {
-    searchForm.addEventListener("submit", (e) => {
-        e.preventDefault();
-        runSearch();
-    });
+// window.onload = async () => {
+//     const marquee = new Marquee(marquee);
+//     marquee.load();
 
-    const marquee = document.getElementById("marquee");
+//     const form = new SearchForm(searchForm);
+//     const results = new SearchResult(searchFormResult);
 
-    const marqueeElement = new Marquee(marquee);
-
-    // marquee.style.visibility = "hidden";
-    // const companyList = await getCompanyList();
-    // const companyListSlice = companyList.slice(0, 100);
-    // marquee.style.visibility = "visible";
-    // console.log("Company list: ", companyList);
-
-    // const marqueeUi = document.getElementById("marquee-content");
-
-    // companyListSlice.forEach(item => {
-    //     const div = document.createElement("div");
-    //     div.classList.add("marquee-tag");
-    //     div.innerHTML = item.symbol + " $" + item.price;
-    //     marqueeUi.append(div);
-    // });
-
-}
+//     form.onSearch((companies) => {
+//         console.log("companies", companies);
+//         results.renderResults(companies);
+//     });
+// }

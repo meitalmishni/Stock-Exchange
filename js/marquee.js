@@ -1,20 +1,21 @@
 class Marquee {
-    constructor(HTMLelement) {
-        this.companyListURL = "https://stock-exchange-dot-full-stack-course-services.ew.r.appspot.com/api/v3/stock/list";
-        this.HTMLelement = HTMLelement;
-        this.getCompanyList(this.companyListURL);
+    constructor(marqueeEelement) {
+        this.marqueeEelement = marqueeEelement;
+        //this.url = "https://stock-exchange-dot-full-stack-course-services.ew.r.appspot.com/api/v3/stock/list";
+        //this.getCompanyList(this.url);
     }
 
-    async getCompanyList(url) {
+    //async getCompanyList(url) {
+    async load() {
         try {
-            this.HTMLelement.style.visibility = "hidden";
+            this.marqueeEelement.style.visibility = "hidden";
 
-            const response = await fetch(url);
+            const response = await fetch("https://stock-exchange-dot-full-stack-course-services.ew.r.appspot.com/api/v3/stock/list");
             const result = await response.json();
 
-            this.HTMLelement.style.visibility = "visible";
+            this.marqueeEelement.style.visibility = "visible";
 
-            const resultSlice = result.slice(0, 100);
+            const resultSlice = result.slice(0, 50);
 
             this.createMarqueeElement(resultSlice);
             //return result;
@@ -25,14 +26,19 @@ class Marquee {
 
     async createMarqueeElement(list) {
         const companyList = await list;
-        const marqueeUi = this.HTMLelement.querySelector("#marquee-content");
+
+        const divContent = document.createElement("div");
+        divContent.classList.add("marquee-content");
+        divContent.setAttribute("id", "marquee-content");
 
         companyList.forEach(item => {
-            const div = document.createElement("div");
-            div.classList.add("marquee-tag");
-            div.innerHTML = item.symbol + " $" + item.price;
-            marqueeUi.append(div);
+            const divItem = document.createElement("div");
+            divItem.classList.add("marquee-tag");
+            divItem.innerHTML = item.symbol + " $" + item.price;
+            divContent.append(divItem);
         });
+
+        this.marqueeEelement.append(divContent);
     }
 
 }
