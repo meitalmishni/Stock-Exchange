@@ -67,13 +67,14 @@
     background: linear-gradient(-135deg, #9FCC9F, #74AB8D);
     width: 98vw;
     box-sizing: border-box;
-    padding: 1em;
+    padding: 0;
     color: white;
     font-weight: 200;
     display: flex;
     align-items: center;
     overflow: hidden;
     margin: 0 auto;
+    height: 10vh;
 }
 
 .marquee-content {

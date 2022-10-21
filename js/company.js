@@ -15,7 +15,7 @@ async function getStockExchangeHistory(symbol) {
     }
 }
 
-export async function getStockExchangeData(symbol) {
+async function getStockExchangeData(symbol) {
     try {
         const url =
             "https://stock-exchange-dot-full-stack-course-services.ew.r.appspot.com/api/v3/company/profile/" +
@@ -42,7 +42,8 @@ window.onload = async () => {
 
     const details = await getStockExchangeData(symbolName);
     const companyProfile = details.profile;
-    console.log(companyProfile);
+
+    console.log(companyImg);
 
     companyImg.setAttribute("src", companyProfile.image);
 

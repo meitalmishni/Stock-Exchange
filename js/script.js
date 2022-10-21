@@ -1,10 +1,10 @@
-import { getStockExchangeData } from './company.js';
+//import { getStockExchangeData } from './company.js';
 //import { Marquee } from './marquee.js';
 
 // const loader = document.getElementById('loader');
-const marqueeElement = document.getElementById("marquee");
-const searchFormElement = document.getElementById("search-form");
-const searchFormResultElement = document.getElementById("search-result");
+// const marqueeElement = document.getElementById("marquee");
+// const searchFormElement = document.getElementById("search-form");
+// const searchFormResultElement = document.getElementById("search-result");
 // const container = document.getElementById("stock-exchange-container");
 
 
@@ -144,78 +144,78 @@ window.onload = () => {
 //     }
 // }
 
-function createStockExchangeCard(name, symbol, image, percentage) {
-    const cardDiv = document.createElement("div");
-    const cardA = document.createElement("a");
-    const cardImg = document.createElement("img");
-    const cardSpan = document.createElement("span");
+// function createStockExchangeCard(name, symbol, image, percentage) {
+//     const cardDiv = document.createElement("div");
+//     const cardA = document.createElement("a");
+//     const cardImg = document.createElement("img");
+//     const cardSpan = document.createElement("span");
 
-    cardA.setAttribute("href", "./company.html?symbol=" + symbol);
-    cardA.setAttribute("target", "_blank");
-    cardA.innerHTML = name + "(" + symbol + ")";
+//     cardA.setAttribute("href", "./company.html?symbol=" + symbol);
+//     cardA.setAttribute("target", "_blank");
+//     cardA.innerHTML = name + "(" + symbol + ")";
 
-    cardImg.setAttribute("src", image);
-    cardImg.classList.add("image-icone");
+//     cardImg.setAttribute("src", image);
+//     cardImg.classList.add("image-icone");
 
-    cardSpan.innerHTML = "(" + percentage + ")";
-    if (percentage > 0) {
-        cardSpan.style.color = "#74AB8D";
-    } else {
-        cardSpan.style.color = "red";
-    }
+//     cardSpan.innerHTML = "(" + percentage + ")";
+//     if (percentage > 0) {
+//         cardSpan.style.color = "#74AB8D";
+//     } else {
+//         cardSpan.style.color = "red";
+//     }
 
-    cardDiv.classList.add("search-div");
-    cardDiv.appendChild(cardImg);
-    cardDiv.appendChild(cardA);
-    cardDiv.appendChild(cardSpan);
+//     cardDiv.classList.add("search-div");
+//     cardDiv.appendChild(cardImg);
+//     cardDiv.appendChild(cardA);
+//     cardDiv.appendChild(cardSpan);
 
-    return cardDiv;
-}
+//     return cardDiv;
+// }
 
-async function getStockExchange(searchType, searchQuery, searchLimit, searchExchange) {
-    try {
-        const url =
-            "https://stock-exchange-dot-full-stack-course-services.ew.r.appspot.com/api/v3/" +
-            searchType +
-            "?query=" +
-            encodeURIComponent(searchQuery) +
-            "&limit=" +
-            searchLimit +
-            "&exchange=" +
-            searchExchange;
+// async function getStockExchange(searchType, searchQuery, searchLimit, searchExchange) {
+//     try {
+//         const url =
+//             "https://stock-exchange-dot-full-stack-course-services.ew.r.appspot.com/api/v3/" +
+//             searchType +
+//             "?query=" +
+//             encodeURIComponent(searchQuery) +
+//             "&limit=" +
+//             searchLimit +
+//             "&exchange=" +
+//             searchExchange;
 
-        const response = await fetch(url);
-        const results = await response.json();
+//         const response = await fetch(url);
+//         const results = await response.json();
 
-        console.log("Results:", results);
+//         console.log("Results:", results);
 
-        return results;
-    } catch (error) {
-        return [];
-    }
-}
+//         return results;
+//     } catch (error) {
+//         return [];
+//     }
+// }
 
 
-async function runSearch(e) {
-    const searchQuery = document.getElementById("search-input").value;
+// async function runSearch(e) {
+//     const searchQuery = document.getElementById("search-input").value;
 
-    container.innerHTML = "";
+//     container.innerHTML = "";
 
-    loader.classList.add("spinner-border");
-    const results = await getStockExchange("search", searchQuery, 10, "NASDAQ");
-    loader.classList.remove("spinner-border");
+//     loader.classList.add("spinner-border");
+//     const results = await getStockExchange("search", searchQuery, 10, "NASDAQ");
+//     loader.classList.remove("spinner-border");
 
-    if (!results) return;
+//     if (!results) return;
 
-    results.forEach(async (item) => {
-        const details = await getStockExchangeData(item.symbol);
-        const companyProfile = details.profile;
-        console.log(companyProfile);
+//     results.forEach(async (item) => {
+//         const details = await getStockExchangeData(item.symbol);
+//         const companyProfile = details.profile;
+//         console.log(companyProfile);
 
-        const card = createStockExchangeCard(item.name, item.symbol, companyProfile.image, companyProfile.changesPercentage);
-        container.appendChild(card);
-    });
-}
+//         const card = createStockExchangeCard(item.name, item.symbol, companyProfile.image, companyProfile.changesPercentage);
+//         container.appendChild(card);
+//     });
+// }
 
 // window.onload = async () => {
 //     const marquee = new Marquee(marquee);

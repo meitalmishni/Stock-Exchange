@@ -70,15 +70,6 @@ class SearchForm {
         loader.classList.remove("spinner-border");
 
         //console.log(this.companies);
-
-        // if (!results) return;
-
-        // results.forEach((item) => {
-        //     const stockExchange = new SearchResult(item);
-        //     const card = stockExchange.createStockExchangeCard();
-
-        //     container.appendChild(card);
-        // });
     }
 
     onSearch(callback) {
