@@ -5,10 +5,7 @@ class SearchForm {
         this.searchQuery = "";
         this.searchLimit = 10;
         this.searchExchange = 'NASDAQ';
-        this.baseUrl = "https://stock-exchange-dot-full-stack-course-services.ew.r.appspot.com/api/v3/";
-        this.companies = [];
         this.createSearchBar();
-
     }
 
     createSearchBar() {
@@ -31,10 +28,10 @@ class SearchForm {
         this.searchFormElement.append(button);
     }
 
-    async getSearchResult() {
+    async getSearchData() {
         try {
             const url =
-                this.baseUrl +
+                "https://stock-exchange-dot-full-stack-course-services.ew.r.appspot.com/api/v3/" +
                 this.searchType +
                 "?query=" +
                 encodeURIComponent(this.searchQuery) +
@@ -46,30 +43,25 @@ class SearchForm {
             const response = await fetch(url);
             const results = await response.json();
 
-            //console.log("Results:", results);
-
             return results;
         } catch (error) {
             return [];
         }
     }
 
-    async runSearch(e) {
+    async runSearch() {
         this.searchQuery = this.searchFormElement.querySelector("#search-input").value;
 
-        const container = document.getElementById("search-result");
-        container.innerHTML = "";
+        const searchResult = document.getElementById("search-result");
+        const loader = document.getElementById("loader");
 
-        const loader = document.getElementById('loader');
-
+        searchResult.innerHTML = "";
         loader.classList.add("spinner-border");
-        const results = await this.getSearchResult();
+        const results = await this.getSearchData();
 
         this.callback(results);
 
         loader.classList.remove("spinner-border");
-
-        //console.log(this.companies);
     }
 
     onSearch(callback) {
@@ -81,5 +73,4 @@ class SearchForm {
             this.runSearch();
         });
     }
-
 }

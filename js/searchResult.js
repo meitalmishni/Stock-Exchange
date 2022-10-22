@@ -30,6 +30,7 @@ class SearchResult {
         cardA.innerHTML = cardA.innerHTML.replace(new RegExp(this.searchValue, "gi"), (match) => `<mark>${match}</mark>`);
 
         cardImg.setAttribute("src", image);
+        cardImg.setAttribute("alt", "image");
         cardImg.classList.add("image-icone");
 
         cardSpan.innerHTML = "(" + percentage + ")";
@@ -48,11 +49,8 @@ class SearchResult {
     }
 
     async renderResults(companies) {
-        console.log("renderResults");
-
         const searchValue = document.querySelector("#search-input").value;
         this.searchValue = searchValue;
-        console.log("searchValue", searchValue);
 
         companies.forEach(async (item) => {
             const details = await this.getCompanyData(item.symbol);

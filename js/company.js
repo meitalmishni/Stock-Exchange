@@ -1,6 +1,4 @@
-// import { StockExchange } from './script.js';
-
-async function getStockExchangeHistory(symbol) {
+async function getCompanyHistory(symbol) {
     try {
         const url =
             "https://stock-exchange-dot-full-stack-course-services.ew.r.appspot.com/api/v3/historical-price-full/" +
@@ -15,7 +13,7 @@ async function getStockExchangeHistory(symbol) {
     }
 }
 
-async function getStockExchangeData(symbol) {
+export async function getCompanyData(symbol) {
     try {
         const url =
             "https://stock-exchange-dot-full-stack-course-services.ew.r.appspot.com/api/v3/company/profile/" +
@@ -36,14 +34,15 @@ window.onload = async () => {
     const companyPrice = document.getElementById("company-price");
     const companyPercentages = document.getElementById("company-percentages");
     const companyDetails = document.getElementById("company-details");
+    const loader = document.getElementById("loader");
 
     const urlParams = new URLSearchParams(window.location.search);
     const symbolName = urlParams.get("symbol");
 
-    const details = await getStockExchangeData(symbolName);
-    const companyProfile = details.profile;
+    loader.classList.add('spinner-border');
 
-    console.log(companyImg);
+    const details = await getCompanyData(symbolName);
+    const companyProfile = details.profile;
 
     companyImg.setAttribute("src", companyProfile.image);
 
@@ -61,18 +60,23 @@ window.onload = async () => {
     }
 
     companyDetails.innerHTML = companyProfile.description;
-    console.log("Data Result:", details.profile);
 
-    const history = await getStockExchangeHistory("AAON");
-    console.log("History Result:", history);
+    const history = await getCompanyHistory(symbolName);
+    const historyData = history.historical;
+
+    const stockExchangeData = [];
+    historyData.forEach((item) => {
+        const object = { x: item.date, y: item.close }
+        stockExchangeData.push(object);
+    });
+
+    stockExchangeData.reverse()
 
     const ctx = document.getElementById('myChart');
     const data = {
         datasets: [{
             label: 'Stock Price History',
-            data: [{ x: "2022-01-01", y: 65 }, { x: "2022-02-01", y: 59 },
-            { x: "2022-03-01", y: 40 }, { x: "2022-04-01", y: 47 },
-            { x: "2022-05-01", y: 70 }, { x: "2022-06-01", y: 74 }],
+            data: stockExchangeData,
             fill: true,
             borderColor: 'rgb(75, 192, 192)',
             tension: 0.1
@@ -82,7 +86,6 @@ window.onload = async () => {
         type: 'line',
         data: data,
     });
+
+    loader.classList.remove('spinner-border');
 };
-
-
-
